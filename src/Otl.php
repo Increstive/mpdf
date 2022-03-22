@@ -979,27 +979,27 @@ class Otl
 			// Shapers - KHMER & THAI & LAO - Replace Word boundary marker with U+200B
 			// Also TIBETAN (no shaper)
 			//=======================================================
-			if (($this->shaper == "K" || $this->shaper == "T" || $this->shaper == "L") || $scriptblock == Ucdn::SCRIPT_TIBETAN) {
-				// Set up properties to insert a U+200B character
-				$newinfo = [];
-				//$newinfo[0] = array('general_category' => 1, 'bidi_type' => 14, 'group' => 'S', 'uni' => 0x200B, 'hex' => '0200B');
-				$newinfo[0] = [
-					'general_category' => Ucdn::UNICODE_GENERAL_CATEGORY_FORMAT,
-					'bidi_type' => Ucdn::BIDI_CLASS_BN,
-					'group' => 'S', 'uni' => 0x200B, 'hex' => '0200B'];
-				// Then insert U+200B at (after) all word end boundaries
-				for ($i = count($this->OTLdata) - 1; $i > 0; $i--) {
-					// Make sure after GSUB that wordend has not been moved - check next char is not in the same syllable
-					if (isset($this->OTLdata[$i]['wordend']) && $this->OTLdata[$i]['wordend'] &&
-						isset($this->OTLdata[$i + 1]['uni']) && (!isset($this->OTLdata[$i + 1]['syllable']) || !isset($this->OTLdata[$i + 1]['syllable']) || $this->OTLdata[$i + 1]['syllable'] != $this->OTLdata[$i]['syllable'])) {
-						array_splice($this->OTLdata, $i + 1, 0, $newinfo);
-						$this->_updateLigatureMarks($i, 1);
-					} elseif ($this->OTLdata[$i]['uni'] == 0x2e) { // Word end if Full-stop.
-						array_splice($this->OTLdata, $i + 1, 0, $newinfo);
-						$this->_updateLigatureMarks($i, 1);
-					}
-				}
-			}
+			// if (($this->shaper == "K" || $this->shaper == "T" || $this->shaper == "L") || $scriptblock == Ucdn::SCRIPT_TIBETAN) {
+			// 	// Set up properties to insert a U+200B character
+			// 	$newinfo = [];
+			// 	//$newinfo[0] = array('general_category' => 1, 'bidi_type' => 14, 'group' => 'S', 'uni' => 0x200B, 'hex' => '0200B');
+			// 	$newinfo[0] = [
+			// 		'general_category' => Ucdn::UNICODE_GENERAL_CATEGORY_FORMAT,
+			// 		'bidi_type' => Ucdn::BIDI_CLASS_BN,
+			// 		'group' => 'S', 'uni' => 0x200B, 'hex' => '0200B'];
+			// 	// Then insert U+200B at (after) all word end boundaries
+			// 	for ($i = count($this->OTLdata) - 1; $i > 0; $i--) {
+			// 		// Make sure after GSUB that wordend has not been moved - check next char is not in the same syllable
+			// 		if (isset($this->OTLdata[$i]['wordend']) && $this->OTLdata[$i]['wordend'] &&
+			// 			isset($this->OTLdata[$i + 1]['uni']) && (!isset($this->OTLdata[$i + 1]['syllable']) || !isset($this->OTLdata[$i + 1]['syllable']) || $this->OTLdata[$i + 1]['syllable'] != $this->OTLdata[$i]['syllable'])) {
+			// 			array_splice($this->OTLdata, $i + 1, 0, $newinfo);
+			// 			$this->_updateLigatureMarks($i, 1);
+			// 		} elseif ($this->OTLdata[$i]['uni'] == 0x2e) { // Word end if Full-stop.
+			// 			array_splice($this->OTLdata, $i + 1, 0, $newinfo);
+			// 			$this->_updateLigatureMarks($i, 1);
+			// 		}
+			// 	}
+			// }
 
 
 			// Shapers - INDIC & ARABIC & KHMER & SINHALA  & MYANMAR - Remove ZWJ and ZWNJ
